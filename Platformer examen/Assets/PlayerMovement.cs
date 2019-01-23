@@ -17,9 +17,6 @@ public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody2D rb;
 
-    
-
-
 
     void Start () {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -50,7 +47,7 @@ public class PlayerMovement : MonoBehaviour {
             rb.AddForce(transform.up * jumpForce);
         }
         
-        //grounded = Physics2D.OverlapArea(groundedA, groundedB, );
+        //grounded = Physics2D.OverlapArea(groundedA, groundedB, layer);
 
     }
 }
