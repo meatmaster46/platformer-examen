@@ -8,14 +8,15 @@ public class PlayerMovement : MonoBehaviour {
     public float walkSpeed;
     public float sprintSpeed;
     private float curSpeed;
+    private Rigidbody2D rb;
 
     //jump
     public bool grounded = false;
+    public bool doubleJump = true;
     public float jumpForce;
     public Transform groundedA;
     public Transform groundedB;
-
-    private Rigidbody2D rb;
+    public LayerMask ground;
 
 
     void Start () {
@@ -40,14 +41,31 @@ public class PlayerMovement : MonoBehaviour {
         {
             curSpeed = walkSpeed;
         }
-        
-
+    }
+    void Update()
+    {
+        //jump
         if (Input.GetKeyDown("space") && grounded == true)
         {
-            rb.AddForce(transform.up * jumpForce);
+            Jump();
         }
-        
-        //grounded = Physics2D.OverlapArea(groundedA, groundedB, layer);
+        //double jump
+        if (Input.GetKeyDown("space") && grounded == false && doubleJump == true)
+        {
+            rb.velocity = new Vector2(0, 0);
+            Jump();
+            doubleJump = false;
+        }
+        if (grounded == true)
+        {
+            doubleJump = true;
+        }
 
+        //ground check
+        grounded = Physics2D.OverlapArea(groundedA.transform.position, groundedB.transform.position, ground);
+    }
+    void Jump()
+    {
+        rb.AddForce(transform.up * jumpForce);
     }
 }
