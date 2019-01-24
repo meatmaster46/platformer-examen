@@ -78,6 +78,8 @@ public class PlayerMovement : MonoBehaviour {
             StrongAttack();
         }
     }
+
+
     void QuickAttackEnd()
     {
         animator.SetBool("quickAttack", false);
