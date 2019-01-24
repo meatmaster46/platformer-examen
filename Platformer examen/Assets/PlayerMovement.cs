@@ -18,10 +18,15 @@ public class PlayerMovement : MonoBehaviour {
     public Transform groundedB;
     public LayerMask ground;
 
+    //animation
+    private Animator animator;
+
 
     void Start () {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         curSpeed = walkSpeed;
+
+        animator = GetComponent<Animator>();
 	}
 	
 	void FixedUpdate () {
@@ -63,9 +68,30 @@ public class PlayerMovement : MonoBehaviour {
 
         //ground check
         grounded = Physics2D.OverlapArea(groundedA.transform.position, groundedB.transform.position, ground);
+
+        if (Input.GetKeyDown("z"))
+        {
+            QuickAttack();
+        }
+        if (Input.GetKeyDown("s"))
+        {
+            StrongAttack();
+        }
+    }
+    void QuickAttackEnd()
+    {
+        animator.SetBool("quickAttack", false);
     }
     void Jump()
     {
         rb.AddForce(transform.up * jumpForce);
+    }
+    void QuickAttack()
+    {
+        animator.SetBool("quickAttack" , true);
+    }
+    void StrongAttack()
+    {
+
     }
 }

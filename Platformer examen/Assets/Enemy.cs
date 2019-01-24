@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour {
 
         //los overlapcircle attempt
         seesPlayer = Physics2D.OverlapCircle(this.transform.position, sightRange, playerLayer);
+
+
     }
     //los trigger attempt
     //private void OnTriggerEnter2D(Collider2D col)
