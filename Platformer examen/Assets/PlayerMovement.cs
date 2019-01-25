@@ -19,7 +19,12 @@ public class PlayerMovement : MonoBehaviour {
     public LayerMask ground;
 
     //animation
+    //private SpriteRenderer spriteRenderer;
     private Animator animator;
+
+    //hiboxes
+    public Collider2D quickAttackHitbox;
+    public Collider2D strongAttackHitbox;
 
 
     void Start () {
@@ -27,6 +32,7 @@ public class PlayerMovement : MonoBehaviour {
         curSpeed = walkSpeed;
 
         animator = GetComponent<Animator>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 	
 	void FixedUpdate () {
@@ -35,9 +41,11 @@ public class PlayerMovement : MonoBehaviour {
         //rb.velocity = movement;
         //rb.AddForce(transform.right * movement * curSpeed - rb.velocity * VelBreak);
 
+        //movement
         Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), 0) * Time.deltaTime;
         this.gameObject.transform.position += transform.position = movement * curSpeed;
 
+        //sprint
         if (Input.GetKey("left shift"))
         {
             curSpeed = sprintSpeed;
@@ -45,6 +53,15 @@ public class PlayerMovement : MonoBehaviour {
         else
         {
             curSpeed = walkSpeed;
+        }
+        //rotate player if turned around
+        if (movement.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+        if (movement.x > 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
     void Update()
@@ -73,17 +90,14 @@ public class PlayerMovement : MonoBehaviour {
         {
             QuickAttack();
         }
-        if (Input.GetKeyDown("s"))
+        if (Input.GetKeyDown("x"))
         {
             StrongAttack();
         }
     }
 
 
-    void QuickAttackEnd()
-    {
-        animator.SetBool("quickAttack", false);
-    }
+    
     void Jump()
     {
         rb.AddForce(transform.up * jumpForce);
@@ -91,9 +105,28 @@ public class PlayerMovement : MonoBehaviour {
     void QuickAttack()
     {
         animator.SetBool("quickAttack" , true);
+        quickAttackHitbox.gameObject.SetActive(true);
+        Invoke("QuickAttackEnd", 0.2f);
+    }
+    void QuickAttackEnd()
+    {
+        animator.SetBool("quickAttack", false);
+        quickAttackHitbox.gameObject.SetActive(false);
     }
     void StrongAttack()
     {
-
+        animator.SetBool("strongAttack", true);
+        
+        Invoke("StrongAttackActive", 0.5f);
+    }
+    void StrongAttackActive()
+    {
+        strongAttackHitbox.gameObject.SetActive(true);
+        Invoke("StrongAttackEnd", 0.1f);
+    }
+    void StrongAttackEnd()
+    {
+        animator.SetBool("strongkAttack", false);
+        strongAttackHitbox.gameObject.SetActive(false);
     }
 }

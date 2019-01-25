@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour {
         //los overlapcircle attempt
         seesPlayer = Physics2D.OverlapCircle(this.transform.position, sightRange, playerLayer);
 
-
+        
     }
     //los trigger attempt
     //private void OnTriggerEnter2D(Collider2D col)
@@ -43,4 +43,13 @@ public class Enemy : MonoBehaviour {
     //        Debug.Log("lol");
     //    }
     //}
+    public void TakeDamage(int damage)
+    {
+        Debug.Log("taken damage");
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
