@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour {
     public float walkSpeed;
     public float sprintSpeed;
     private float curSpeed;
+
+    //physics
     private Rigidbody2D rb;
 
     //jump
@@ -19,13 +21,16 @@ public class PlayerMovement : MonoBehaviour {
     public LayerMask ground;
 
     //animation
-    //private SpriteRenderer spriteRenderer;
     private Animator animator;
 
     //hiboxes
     public Collider2D quickAttackHitbox;
     public Collider2D strongAttackHitbox;
 
+    //range
+    public bool hasRange = false;
+    public GameObject projectile;
+    public Transform projectileStart;
 
     void Start () {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -95,9 +100,17 @@ public class PlayerMovement : MonoBehaviour {
             StrongAttack();
         }
     }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.GetComponent<RangedPotion>())
+        {
+            hasRange = true;
+            col.gameObject.SetActive(false);
+        }
+    }
 
 
-    
+
     void Jump()
     {
         rb.AddForce(transform.up * jumpForce);
@@ -122,11 +135,15 @@ public class PlayerMovement : MonoBehaviour {
     void StrongAttackActive()
     {
         strongAttackHitbox.gameObject.SetActive(true);
+        if (hasRange == true)
+        {
+            Instantiate(projectile, projectileStart.transform.position, transform.rotation);
+        }
         Invoke("StrongAttackEnd", 0.1f);
     }
     void StrongAttackEnd()
     {
-        animator.SetBool("strongkAttack", false);
+        animator.SetBool("strongAttack", false);
         strongAttackHitbox.gameObject.SetActive(false);
     }
 }
