@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     private Animator animator;
 
     //hiboxes
+    public bool attacking = false;
     public Collider2D quickAttackHitbox;
     public Collider2D strongAttackHitbox;
 
@@ -91,11 +92,11 @@ public class PlayerMovement : MonoBehaviour {
         //ground check
         grounded = Physics2D.OverlapArea(groundedA.transform.position, groundedB.transform.position, ground);
 
-        if (Input.GetKeyDown("z"))
+        if (Input.GetKeyDown("z") && attacking == false)
         {
             QuickAttack();
         }
-        if (Input.GetKeyDown("x"))
+        if (Input.GetKeyDown("x") && attacking == false)
         {
             StrongAttack();
         }
@@ -117,6 +118,7 @@ public class PlayerMovement : MonoBehaviour {
     }
     void QuickAttack()
     {
+        attacking = true;
         animator.SetBool("quickAttack" , true);
         quickAttackHitbox.gameObject.SetActive(true);
         Invoke("QuickAttackEnd", 0.2f);
@@ -125,9 +127,11 @@ public class PlayerMovement : MonoBehaviour {
     {
         animator.SetBool("quickAttack", false);
         quickAttackHitbox.gameObject.SetActive(false);
+        attacking = false;
     }
     void StrongAttack()
     {
+        attacking = true;
         animator.SetBool("strongAttack", true);
         
         Invoke("StrongAttackActive", 0.5f);
@@ -139,11 +143,12 @@ public class PlayerMovement : MonoBehaviour {
         {
             Instantiate(projectile, projectileStart.transform.position, transform.rotation);
         }
-        Invoke("StrongAttackEnd", 0.1f);
+        Invoke("StrongAttackEnd", 0.5f);
     }
     void StrongAttackEnd()
     {
         animator.SetBool("strongAttack", false);
         strongAttackHitbox.gameObject.SetActive(false);
+        attacking = false;
     }
 }
