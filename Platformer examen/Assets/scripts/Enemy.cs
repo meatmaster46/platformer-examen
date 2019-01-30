@@ -10,14 +10,20 @@ public class Enemy : MonoBehaviour {
     public LayerMask playerLayer;
     public float sightRange;
     public bool seesPlayer;
+
+    //attack
     public bool attacking = false;
+    public Collider2D attackHitbox;
 
     private GameObject player;
     private Transform playerPos;
+    private Animator animator;
 
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>().gameObject;
+        animator = GetComponent<Animator>();
+        attackHitbox = GetComponentInChildren<CircleCollider2D>();
         //playerPos = player.transform.position;
     }
 
@@ -29,7 +35,7 @@ public class Enemy : MonoBehaviour {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
         }
 
-        if(Vector2.Distance(this.transform.position, player.transform.position) < 0.7f)
+        if(Vector2.Distance(this.transform.position, player.transform.position) < 0.6f && attacking == false)
         {
             Attack();
         }
@@ -70,7 +76,21 @@ public class Enemy : MonoBehaviour {
     //}
     void Attack()
     {
-        Debug.Log("attack");
+        
+        animator.SetBool("attacking", true);
+        attacking = true;
+        Invoke("AttackActive", 0.52f);
+    }
+    void AttackActive()
+    {
+        attackHitbox.gameObject.SetActive(true);
+        animator.SetBool("attacking", false);
+        Invoke("AttackEnd", 0.5f);
+    }
+    void AttackEnd()
+    {
+        attackHitbox.gameObject.SetActive(false);
+        attacking = false;
     }
     public void TakeDamage(int damage)
     {

@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour {
     public float sprintSpeed;
     private float curSpeed;
 
+    public int health;
+
     //physics
     private Rigidbody2D rb;
 
@@ -150,5 +152,20 @@ public class PlayerMovement : MonoBehaviour {
         animator.SetBool("strongAttack", false);
         strongAttackHitbox.gameObject.SetActive(false);
         attacking = false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            this.gameObject.SetActive(false);
+            GameOver();
+        }
+    }
+
+    void GameOver()
+    {
+
     }
 }
