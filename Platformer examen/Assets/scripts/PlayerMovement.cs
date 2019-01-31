@@ -35,12 +35,15 @@ public class PlayerMovement : MonoBehaviour {
     public GameObject projectile;
     public Transform projectileStart;
 
+    public GameObject gameOverMenu;
+    //public Text healthText;
+
     void Start () {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         curSpeed = walkSpeed;
 
         animator = GetComponent<Animator>();
-        //spriteRenderer = GetComponent<SpriteRenderer>();
+        //gameOverMenu = FindObjectOfType<MenuManager>().gameObject;
 	}
 	
 	void FixedUpdate () {
@@ -102,6 +105,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             StrongAttack();
         }
+        //healthText.text = healthText.ToString();
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -110,8 +114,12 @@ public class PlayerMovement : MonoBehaviour {
             hasRange = true;
             col.gameObject.SetActive(false);
         }
+        if (col.gameObject.GetComponent<HealthPotion>())
+        {
+            health += 10;
+            col.gameObject.SetActive(false);
+        }
     }
-
 
 
     void Jump()
@@ -144,6 +152,7 @@ public class PlayerMovement : MonoBehaviour {
         if (hasRange == true)
         {
             Instantiate(projectile, projectileStart.transform.position, transform.rotation);
+            
         }
         Invoke("StrongAttackEnd", 0.5f);
     }
@@ -159,13 +168,13 @@ public class PlayerMovement : MonoBehaviour {
         health -= damage;
         if (health <= 0)
         {
-            this.gameObject.SetActive(false);
             GameOver();
         }
     }
 
-    void GameOver()
+    public void GameOver()
     {
-
+        this.gameObject.SetActive(false);
+        gameOverMenu.SetActive(true);
     }
 }

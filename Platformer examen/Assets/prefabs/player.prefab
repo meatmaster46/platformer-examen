@@ -117,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1132749895374588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.985, y: 0.963, z: 0}
+  m_LocalPosition: {x: -4.76, y: 0.963, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4570175507657080}
@@ -276,7 +276,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15, y: 0.26}
+  m_Size: {x: 0.11, y: 0.26}
   m_EdgeRadius: 0
 --- !u!95 &95260082405231986
 Animator:
@@ -324,6 +324,7 @@ MonoBehaviour:
   hasRange: 0
   projectile: {fileID: 1122478785096832, guid: 16cf6c229f505b147a03ae485881729f, type: 2}
   projectileStart: {fileID: 4553605681903846}
+  gameOverMenu: {fileID: 0}
 --- !u!114 &114570383418487032
 MonoBehaviour:
   m_ObjectHideFlags: 1

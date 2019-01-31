@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4129295890921954}
   - component: {fileID: 58625614084677590}
+  - component: {fileID: 114093288874560102}
   m_Layer: 11
   m_Name: attack hitbox
   m_TagString: Untagged
@@ -68,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1088976747657018}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.54, y: 0.968, z: 0}
+  m_LocalPosition: {x: 4.54, y: 0.968, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4129295890921954}
@@ -107,7 +108,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.1, y: -0.06}
+  m_Offset: {x: 0.08, y: -0.06}
   serializedVersion: 2
   m_Radius: 0.15
 --- !u!61 &61226646334976402
@@ -178,15 +179,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0121546993dda54a9c1e39f709aa5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 12
+  health: 16
   speed: 1
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
-  sightRange: 5
+    m_Bits: 1024
+  sightRange: 3.5
   seesPlayer: 0
   attacking: 0
   attackHitbox: {fileID: 0}
+--- !u!114 &114093288874560102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1630515748062814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b7ec3367cc2f44ca450ed935d8a03b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 3
 --- !u!212 &212759218346168894
 SpriteRenderer:
   m_ObjectHideFlags: 1

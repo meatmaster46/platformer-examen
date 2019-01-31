@@ -7,10 +7,20 @@ public class Projectile : MonoBehaviour {
     public int damage = 3;
     public int speed = 2;
 
+    private Rigidbody2D rb;
+
+    private void Start()
+    {
+        rb = this.gameObject.GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * speed;
+    }
+
     private void Update()
     {
-        this.gameObject.transform.position += transform.position = Vector2.right * speed * Time.deltaTime;
-        //this.gameObject.GetComponent<Rigidbody2D>
+
+        //this.gameObject.transform.position += transform.position = Vector2.right * speed * Time.deltaTime;
+        
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

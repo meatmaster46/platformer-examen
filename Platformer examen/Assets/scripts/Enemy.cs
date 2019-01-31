@@ -24,13 +24,12 @@ public class Enemy : MonoBehaviour {
         player = FindObjectOfType<PlayerMovement>().gameObject;
         animator = GetComponent<Animator>();
         attackHitbox = GetComponentInChildren<CircleCollider2D>();
-        //playerPos = player.transform.position;
     }
 
     void Update()
     {
         //transform.position = Vector2.MoveTowards(transform.position, player.transform.position , speed);
-        if(attacking != true)
+        if(attacking != true && seesPlayer == true)
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
         }
@@ -61,8 +60,11 @@ public class Enemy : MonoBehaviour {
         //}
 
         //los overlapcircle attempt
-        //seesPlayer = Physics2D.OverlapCircle(this.transform.position, sightRange, playerLayer);
-
+        seesPlayer = Physics2D.OverlapCircle(this.transform.position, sightRange, playerLayer);
+        //if (Physics2D.OverlapCircle(this.transform.position, sightRange, playerLayer))
+        //{
+        //    Debug.Log("works");
+        //}
 
     }
     //los trigger attempt
