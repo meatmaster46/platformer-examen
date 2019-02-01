@@ -19,12 +19,15 @@ public class Enemy : MonoBehaviour {
     private Transform playerPos;
     private Animator animator;
 
+    public AudioSource audioSource;
+
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>().gameObject;
         animator = GetComponent<Animator>();
         attackHitbox = GetComponentInChildren<CircleCollider2D>().gameObject;
         attackHitbox.gameObject.SetActive(false);
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -98,6 +101,7 @@ public class Enemy : MonoBehaviour {
     public void TakeDamage(int damage)
     {
         health -= damage;
+        audioSource.Play();
         if (health <= 0)
         {
             Destroy(this.gameObject);

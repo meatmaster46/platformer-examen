@@ -21,9 +21,14 @@ public class PlayerMovement : MonoBehaviour {
     public Transform groundedA;
     public Transform groundedB;
     public LayerMask ground;
+    public bool hasDoubleJump = false;
 
     //animation
     private Animator animator;
+
+    //sound
+    public AudioSource audioSource;
+    public AudioClip deathSound;
 
     //hiboxes
     public bool attacking = false;
@@ -43,6 +48,8 @@ public class PlayerMovement : MonoBehaviour {
         curSpeed = walkSpeed;
 
         animator = GetComponent<Animator>();
+
+        audioSource = gameObject.GetComponent<AudioSource>();
         //gameOverMenu = FindObjectOfType<MenuManager>().gameObject;
 	}
 	
@@ -78,12 +85,12 @@ public class PlayerMovement : MonoBehaviour {
     void Update()
     {
         //jump
-        if (Input.GetKeyDown("space") && grounded == true)
+        if (Input.GetKeyDown("space")  && grounded == true)
         {
             Jump();
         }
         //double jump
-        if (Input.GetKeyDown("space") && grounded == false && doubleJump == true)
+        if (Input.GetKeyDown("space") && grounded == false && hasDoubleJump == true && doubleJump == true)
         {
             rb.velocity = new Vector2(0, 0);
             Jump();
@@ -117,6 +124,11 @@ public class PlayerMovement : MonoBehaviour {
         if (col.gameObject.GetComponent<HealthPotion>())
         {
             health += 10;
+            col.gameObject.SetActive(false);
+        }
+        if (col.gameObject.GetComponent<JumpPotion>())
+        {
+            hasDoubleJump = true;
             col.gameObject.SetActive(false);
         }
     }
@@ -166,6 +178,7 @@ public class PlayerMovement : MonoBehaviour {
     public void TakeDamage(int damage)
     {
         health -= damage;
+        audioSource.Play();
         if (health <= 0)
         {
             GameOver();
