@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour {
 
     //attack
     public bool attacking = false;
-    public Collider2D attackHitbox;
+    public GameObject attackHitbox;
 
     private GameObject player;
     private Transform playerPos;
@@ -23,7 +23,8 @@ public class Enemy : MonoBehaviour {
     {
         player = FindObjectOfType<PlayerMovement>().gameObject;
         animator = GetComponent<Animator>();
-        attackHitbox = GetComponentInChildren<CircleCollider2D>();
+        attackHitbox = GetComponentInChildren<CircleCollider2D>().gameObject;
+        attackHitbox.gameObject.SetActive(false);
     }
 
     void Update()
