@@ -31,4 +31,9 @@ public class MenuManager : MonoBehaviour {
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
     }
+    public void ButtonNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Time.timeScale = 1;
+    }
 }

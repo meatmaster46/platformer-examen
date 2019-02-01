@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Dragon : MonoBehaviour
+{
 
     public int health;
     public float speed;
@@ -26,19 +27,19 @@ public class Enemy : MonoBehaviour {
         player = FindObjectOfType<PlayerMovement>().gameObject;
         animator = GetComponent<Animator>();
         attackHitbox = GetComponentInChildren<CircleCollider2D>().gameObject;
-        attackHitbox.gameObject.SetActive(false);
+        //attackHitbox.gameObject.SetActive(false);
         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
     {
         //transform.position = Vector2.MoveTowards(transform.position, player.transform.position , speed);
-        if(attacking != true && seesPlayer == true)
+        if (attacking != true && seesPlayer == true)
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
         }
 
-        if(Vector2.Distance(this.transform.position, player.transform.position) < 0.6f && attacking == false)
+        if (Vector2.Distance(this.transform.position, player.transform.position) < 0.6f && attacking == false)
         {
             Attack();
         }
@@ -69,6 +70,7 @@ public class Enemy : MonoBehaviour {
         //{
         //    Debug.Log("works");
         //}
+        //this.gameObject.SetActive(true);
 
     }
     //los trigger attempt
@@ -87,11 +89,11 @@ public class Enemy : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-    
-    
+
+
     void Attack()
     {
-        
+
         animator.SetBool("attacking", true);
         attacking = true;
         Invoke("AttackActive", 0.52f);
@@ -113,7 +115,7 @@ public class Enemy : MonoBehaviour {
         audioSource.Play();
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

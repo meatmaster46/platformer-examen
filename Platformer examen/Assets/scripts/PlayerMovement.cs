@@ -41,7 +41,8 @@ public class PlayerMovement : MonoBehaviour {
     public Transform projectileStart;
 
     public GameObject gameOverMenu;
-    //public Text healthText;
+
+    public int keys = 0;
 
     void Start () {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
@@ -50,7 +51,6 @@ public class PlayerMovement : MonoBehaviour {
         animator = GetComponent<Animator>();
 
         audioSource = gameObject.GetComponent<AudioSource>();
-        //gameOverMenu = FindObjectOfType<MenuManager>().gameObject;
 	}
 	
 	void FixedUpdate () {
@@ -112,8 +112,8 @@ public class PlayerMovement : MonoBehaviour {
         {
             StrongAttack();
         }
-        //healthText.text = healthText.ToString();
     }
+    //collision with items
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.GetComponent<RangedPotion>())
@@ -130,6 +130,15 @@ public class PlayerMovement : MonoBehaviour {
         {
             hasDoubleJump = true;
             col.gameObject.SetActive(false);
+        }
+        if (col.gameObject.GetComponent<Spikes>())
+        {
+            GameOver();
+        }
+        if (col.gameObject.GetComponent<Key>())
+        {
+            col.gameObject.SetActive(false);
+            keys++;
         }
     }
 

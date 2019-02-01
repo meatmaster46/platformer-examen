@@ -10,7 +10,11 @@ public class Door : MonoBehaviour {
     {
         if (col.gameObject.GetComponent<PlayerMovement>())
         {
-            winMenu.SetActive(true);
+            if (col.gameObject.GetComponent<PlayerMovement>().keys >= 2)
+            {
+                winMenu.SetActive(true);
+                Time.timeScale = 0;
+            }
         }
     }
 }
